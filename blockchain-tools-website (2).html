@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JumaoFindTools - Curated Blockchain Tools Collection</title>
+    <meta name="description" content="A curated collection of the best blockchain tools for developers, traders, and crypto enthusiasts.">
+    <link rel="canonical" href="https://jumaofindtools.vercel.app/">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0070f3',
+                        dark: '#111827',
+                        light: '#f9fafb',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(55, 65, 81, 0.5);
+        }
+        .nav-item.active {
+            background-color: #0070f3;
+            color: white;
+        }
+        .sub-nav-item {
+            transition: all 0.3s ease;
+        }
+        .sub-nav-item:hover {
+            background-color: rgba(55, 65, 81, 0.3);
+        }
+        .sub-nav-item.active {
+            background-color: rgba(0, 112, 243, 0.2);
+            color: #0070f3;
+        }
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+            height: calc(100vh - 8rem);
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .mobile-nav-toggle {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -300px;
+                top: 0;
+                height: 100%;
+                width: 300px;
+                z-index: 50;
+                transition: left 0.3s ease;
+            }
+            .sidebar.open {
+                left: 0;
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            .iframe-container {
+                height: calc(100vh - 6rem);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <header class="bg-dark py-4 border-b border-gray-800 sticky top-0 z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <button id="mobile-menu-button" class="mobile-nav-toggle mr-4 text-gray-300 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <h1 class="text-2xl md:text-3xl font-bold text-primary">JumaoFindTools</h1>
+                </div>
+                <p class="text-gray-400 hidden md:block">A curated collection of blockchain tools</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar bg-gray-800 w-64 border-r border-gray-700 h-screen overflow-y-auto">
+            <div class="p-4">
+                <h2 class="text-lg font-semibold mb-4 text-gray-300">Categories</h2>
+                <nav>
+                    <ul class="space-y-1">
+                        <!-- Chain Analytics Category -->
+                        <li>
+                            <div class="nav-item px-3 py-2 rounded cursor-pointer flex justify-between items-center" data-category="chain-analytics">
+                                <span>Chain Analytics</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                            <ul class="pl-4 mt-1 space-y-1 hidden" data-submenu="chain-analytics">
+                                <li>
+                                    <div class="sub-nav-item px-3 py-2 rounded cursor-pointer text-sm" data-tool="sol-chain-stories" data-url="https://www.pump.news/en/rank">
+                                        SOL Chain Stories
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- Security Category -->
+                        <li>
+                            <div class="nav-item px-3 py-2 rounded cursor-pointer flex justify-between items-center" data-category="security">
+                                <span>Security</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                            <ul class="pl-4 mt-1 space-y-1 hidden" data-submenu="security">
+                                <li>
+                                    <div class="sub-nav-item px-3 py-2 rounded cursor-pointer text-sm" data-tool="virus-detection" data-url="https://www.virustotal.com/gui/home/url" data-external="true">
+                                        Website Virus Detection
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- DEX Category (Example additional category) -->
+                        <li>
+                            <div class="nav-item px-3 py-2 rounded cursor-pointer flex justify-between items-center" data-category="dex">
+                                <span>DEX Tools</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                            <ul class="pl-4 mt-1 space-y-1 hidden" data-submenu="dex">
+                                <li>
+                                    <div class="sub-nav-item px-3 py-2 rounded cursor-pointer text-sm" data-tool="coming-soon" data-url="">
+                                        Coming Soon
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- About -->
+                        <li>
+                            <div class="nav-item px-3 py-2 rounded cursor-pointer" data-category="about">
+                                About
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4">
+            <!-- Default/Welcome View -->
+            <div id="welcome-view" class="mb-8">
+                <div class="max-w-3xl mx-auto text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Discover the Best Blockchain Tools</h2>
+                    <p class="text-xl text-gray-400">Your comprehensive resource for blockchain monitoring, security, and analysis tools</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Featured Tool 1 -->
+                    <div class="bg-gray-800 rounded-lg p-6 transition duration-300 hover:bg-gray-700">
+                        <h3 class="text-xl font-semibold mb-2">SOL Chain Stories</h3>
+                        <p class="text-gray-400 mb-4">Track Solana chain activity and analyze token movements</p>
+                        <button class="inline-flex items-center text-primary hover:underline" 
+                                onclick="loadTool('sol-chain-stories', 'https://www.pump.news/en/rank')">
+                            Explore Tool
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Featured Tool 2 -->
+                    <div class="bg-gray-800 rounded-lg p-6 transition duration-300 hover:bg-gray-700">
+                        <h3 class="text-xl font-semibold mb-2">Website Virus Detection</h3>
+                        <p class="text-gray-400 mb-4">Scan websites for malware, phishing, and other threats</p>
+                        <button class="inline-flex items-center text-primary hover:underline"
+                                onclick="loadTool('virus-detection', 'https://www.virustotal.com/gui/home/url', true)">
+                            Explore Tool
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+                            <!-- Tool View (Initially Hidden) -->
+            <div id="tool-view" class="hidden">
+                <div class="mb-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <button id="back-button" class="inline-flex items-center text-gray-400 hover:text-primary mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back
+                        </button>
+                        <h2 id="tool-title" class="text-2xl font-bold">Tool Name</h2>
+                    </div>
+                    <button id="open-external-button" class="inline-flex items-center text-gray-400 hover:text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Open in New Tab
+                    </button>
+                </div>
+                <div class="iframe-container">
+                    <iframe id="tool-iframe" src="" title="Tool Preview" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+                </div>
+                <div id="iframe-error" class="hidden bg-gray-800 p-6 rounded-lg mt-4 text-center">
+                    <p class="text-red-400 mb-3">This website cannot be displayed in an iframe due to security restrictions.</p>
+                    <button id="iframe-external-button" class="px-4 py-2 bg-primary text-white rounded hover:bg-blue-600 transition">
+                        Open in New Tab
+                    </button>
+                </div>
+            </div>
+            
+            <!-- About View (Initially Hidden) -->
+            <div id="about-view" class="hidden max-w-3xl mx-auto">
+                <div class="bg-gray-800 rounded-lg p-8">
+                    <h2 class="text-2xl font-bold mb-4">About JumaoFindTools</h2>
+                    <p class="text-gray-300 mb-4">JumaoFindTools is a curated collection of the best blockchain and cryptocurrency tools available online. Our mission is to help developers, traders, and crypto enthusiasts find the right tools for blockchain analysis, security, and monitoring.</p>
+                    <p class="text-gray-300">We continuously search for and evaluate new tools to add to our collection. Our focus is on providing a seamless experience for discovering and using valuable blockchain resources.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="bg-dark py-4 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-400">&copy; 2025 JumaoFindTools. All rights reserved.</p>
+                </div>
+                <div>
+                    <ul class="flex space-x-4">
+                        <li><a href="#" class="text-gray-400 hover:text-primary">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const sidebar = document.getElementById('sidebar');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const welcomeView = document.getElementById('welcome-view');
+            const toolView = document.getElementById('tool-view');
+            const aboutView = document.getElementById('about-view');
+            const toolTitle = document.getElementById('tool-title');
+            const toolIframe = document.getElementById('tool-iframe');
+            const backButton = document.getElementById('back-button');
+            const openExternalButton = document.getElementById('open-external-button');
+            const iframeError = document.getElementById('iframe-error');
+            const iframeExternalButton = document.getElementById('iframe-external-button');
+            let currentToolUrl = '';
+            const categoryItems = document.querySelectorAll('.nav-item');
+            const subNavItems = document.querySelectorAll('.sub-nav-item');
+            
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+            });
+            
+            // Category click handlers
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Toggle the arrow icon
+                    const arrow = this.querySelector('svg');
+                    if (arrow) {
+                        arrow.classList.toggle('rotate-180');
+                    }
+                    
+                    // Toggle the submenu
+                    const submenu = document.querySelector(`[data-submenu="${category}"]`);
+                    if (submenu) {
+                        submenu.classList.toggle('hidden');
+                    }
+                    
+                    // Handle About view
+                    if (category === 'about') {
+                        showView('about');
+                    }
+                });
+            });
+            
+            // Tool click handlers
+            subNavItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const tool = this.getAttribute('data-tool');
+                    const url = this.getAttribute('data-url');
+                    
+                    // Clear active states from all sub-nav items
+                    subNavItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    
+                    // Set active state
+                    this.classList.add('active');
+                    
+                    // Load the tool
+                    const isExternal = this.getAttribute('data-external') === 'true';
+                    loadTool(tool, url, isExternal);
+                    
+                    // Close mobile menu if open
+                    sidebar.classList.remove('open');
+                });
+            });
+            
+            // Back button handler
+            backButton.addEventListener('click', function() {
+                showView('welcome');
+                
+                // Clear active states
+                subNavItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+            });
+            
+            // Open in new tab button handler
+            openExternalButton.addEventListener('click', function() {
+                if (currentToolUrl) {
+                    window.open(currentToolUrl, '_blank');
+                }
+            });
+            
+            // iframe error button handler
+            iframeExternalButton.addEventListener('click', function() {
+                if (currentToolUrl) {
+                    window.open(currentToolUrl, '_blank');
+                }
+            });
+            
+            // Handle iframe load errors
+            toolIframe.addEventListener('load', function() {
+                // Success - hide error message if visible
+                iframeError.classList.add('hidden');
+            });
+            
+            toolIframe.addEventListener('error', function() {
+                handleIframeError();
+            });
+            
+            // Function to handle iframe errors
+            function handleIframeError() {
+                toolIframe.classList.add('hidden');
+                iframeError.classList.remove('hidden');
+            }
+            
+            // Function to load a tool
+            window.loadTool = function(tool, url, isExternal) {
+                if (!url) {
+                    alert('This tool is coming soon!');
+                    return;
+                }
+                
+                toolTitle.textContent = getTitleFromTool(tool);
+                currentToolUrl = url;
+                
+                if (isExternal || document.querySelector(`[data-tool="${tool}"]`)?.getAttribute('data-external') === 'true') {
+                    // For sites that block iframe embedding, open in new tab instead
+                    window.open(url, '_blank');
+                    return;
+                }
+                
+                // Reset error message and show loading
+                iframeError.classList.add('hidden');
+                toolIframe.classList.remove('hidden');
+                
+                // Load the tool in iframe
+                toolIframe.src = url;
+                showView('tool');
+            }
+            
+            // Function to show a specific view
+            function showView(view) {
+                welcomeView.classList.add('hidden');
+                toolView.classList.add('hidden');
+                aboutView.classList.add('hidden');
+                
+                switch(view) {
+                    case 'welcome':
+                        welcomeView.classList.remove('hidden');
+                        break;
+                    case 'tool':
+                        toolView.classList.remove('hidden');
+                        break;
+                    case 'about':
+                        aboutView.classList.remove('hidden');
+                        break;
+                }
+            }
+            
+            // Helper function to get a nice title from tool ID
+            function getTitleFromTool(tool) {
+                switch(tool) {
+                    case 'sol-chain-stories':
+                        return 'SOL Chain Stories';
+                    case 'virus-detection':
+                        return 'Website Virus Detection';
+                    default:
+                        return tool.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
